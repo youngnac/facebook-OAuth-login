@@ -1,0 +1,49 @@
+{% extends 'common/index.html' %}
+{% block content %}
+<a href="https://www.facebook.com/v2.8/dialog/oauth?client_id={{ facebook_app_id }}&scope=user_posts&redirect_uri=http://localhost:8000/post/list/">view
+    list</a>
+
+
+<table>
+    <thead>
+    <tr>
+        <td>
+            <h1>COMMENTS</h1>
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    {% if dict_count_comments %}
+    {% for k in dict_count_comments %}
+    <tr>
+        <td>{{ k.name }}: {{ k.count }}</td>
+    </tr>
+    {% endfor %}
+    {% endif %}
+
+    </tbody>
+</table>
+
+<table>
+    <thead>
+    <tr>
+        <td>
+            <h1>LIKES</h1>
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+{% if dict_count_likes %}
+{% for i in dict_count_likes %}
+    <tr>
+        <td>{{ i.name }}: {{ i.count }}</td>
+    </tr>
+    {% endfor %}
+    {% endif %}
+
+    </tbody>
+</table>
+
+
+{% endblock %}
+

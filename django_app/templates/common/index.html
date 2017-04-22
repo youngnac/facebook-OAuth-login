@@ -1,0 +1,18 @@
+{% block content %}
+
+<div class="index-container">
+    <div>
+        <h1>index page</h1>
+        {% if user.is_authenticated %}
+        <!--<img src="{{ MEDIA_URL}}{{ user.img_profile}}" alt="">-->
+        <span>{{ user.username }}님으로 로그인 되었습니다</span>
+        <a href="{% url 'member:logout' %}">로그아웃</a>
+        {% else %}
+        <a href="{% url 'member:login' %}">로그인</a>
+        {% endif %}
+
+    </div>
+</div>
+<hr>
+
+{% endblock %}
