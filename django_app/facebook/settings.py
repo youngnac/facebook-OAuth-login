@@ -15,9 +15,9 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_DIR = os.path.dirname(BASE_DIR)
-CONF_DIR = os.path.join(BASE_DIR, '.conf')
+CONF_DIR = os.path.join(os.path.dirname(BASE_DIR), '.conf')
 print(CONF_DIR)
-config = json.loads(open(os.path.join(CONF_DIR,'settings_local.json')).read())
+config = json.loads(open(os.path.join(CONF_DIR, 'settings_local.json')).read())
 
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
@@ -27,7 +27,7 @@ STATICFILES_DIR = (
     STATIC_DIR
 )
 
-MEDIA_URL='/media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 SECRET_KEY = config["django"]["secret_key"]
@@ -45,6 +45,11 @@ ALLOWED_HOSTS = []
 AUTH_USER_MODEL = 'member.MyUser'
 # Application definition
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'member.backends.FacebookBackend']
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -53,7 +58,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'member'
+    'member',
+    'rest_framework',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -79,6 +86,8 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                # MEDIA URL
+                'django.template.context_processors.media',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -131,4 +140,3 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
-
